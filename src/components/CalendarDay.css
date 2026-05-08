@@ -1,0 +1,81 @@
+.day-cell {
+  border-right: 1px solid var(--color-border);
+  border-bottom: 1px solid var(--color-border);
+  padding: 6px;
+  cursor: pointer;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  transition: background 0.1s;
+}
+
+.day-cell:hover {
+  background: var(--color-accent-light);
+}
+
+.day-cell.empty-cell {
+  cursor: default;
+  background: var(--color-surface);
+}
+
+.day-cell.empty-cell:hover {
+  background: var(--color-surface);
+}
+
+.day-cell.other-month .day-number {
+  color: var(--color-muted);
+}
+
+.day-number {
+  font-size: 0.8rem;
+  font-weight: 600;
+  align-self: flex-end;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.day-cell.is-today .day-number {
+  background: var(--color-today-bg);
+  color: var(--color-today-text);
+}
+
+.event-chip {
+  background: var(--color-chip-bg);
+  color: var(--color-chip-text);
+  border: none;
+  border-radius: var(--radius-sm);
+  padding: 2px 6px;
+  font-size: 0.7rem;
+  font-weight: 500;
+  text-align: left;
+  cursor: pointer;
+  width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  transition: opacity 0.1s;
+  flex-shrink: 0;
+}
+
+.event-chip:hover {
+  opacity: 0.8;
+}
+
+@media (max-width: 640px) {
+  .day-number {
+    font-size: 0.7rem;
+    width: 20px;
+    height: 20px;
+  }
+
+  .event-chip {
+    font-size: 0.62rem;
+    padding: 1px 4px;
+  }
+}
