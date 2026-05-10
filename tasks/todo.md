@@ -70,6 +70,23 @@ React + Vite single-page calendar app with month view, localStorage event persis
 
 ---
 
+## Tailwind CSS v4 Migration
+
+- [x] 1. Install `tailwindcss` + `@tailwindcss/vite` packages
+- [x] 2. Update `vite.config.js` — add `@tailwindcss/vite` plugin alongside React plugin
+- [x] 3. Update `src/App.css` — replace content with `@import "tailwindcss"` + keep body/root layout resets
+- [x] 4. Convert `Calendar.jsx` — swap all classNames to Tailwind utilities, remove `Calendar.css` import
+- [x] 5. Convert `CalendarDay.jsx` — swap all classNames to Tailwind utilities, remove `CalendarDay.css` import
+- [x] 6. Convert `EventModal.jsx` — swap all classNames to Tailwind utilities, remove `EventModal.css` import
+
+**Notes:**
+- Tailwind v4 uses `@import "tailwindcss"` in CSS (no config file needed)
+- `@tailwindcss/vite` replaces PostCSS setup
+- Old `.css` component files kept but unimported
+- Design stays identical — same colors, spacing, and layout
+
+---
+
 ## Review
 
 All 14 files created from scratch. Build passes with zero errors or warnings.

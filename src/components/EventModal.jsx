@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react'
 import { formatDisplayDate } from '../utils/dateHelpers'
-import './EventModal.css'
 
 const EMPTY_FORM = { title: '', time: '', description: '' }
 
@@ -51,49 +50,60 @@ export default function EventModal({ isOpen, selectedDate, event, onSave, onDele
   const isEditing = Boolean(event)
 
   return (
-    <div className="modal-overlay" onClick={handleOverlayClick} onKeyDown={handleKeyDown} tabIndex={-1}>
-      <div className="modal-box" role="dialog" aria-modal="true">
-        <div className="modal-header">
+    <div
+      className="fixed inset-0 bg-black/45 flex items-center justify-center z-[1000]"
+      onClick={handleOverlayClick}
+      onKeyDown={handleKeyDown}
+      tabIndex={-1}
+    >
+      <div className="bg-white rounded-xl px-8 py-7 w-full max-w-[440px] mx-4 shadow-2xl flex flex-col gap-[18px]" role="dialog" aria-modal="true">
+        <div className="flex items-center justify-between">
           <div>
-            <div className="modal-title">{isEditing ? 'Edit Event' : 'New Event'}</div>
+            <div className="text-base font-bold text-gray-900">{isEditing ? 'Edit Event' : 'New Event'}</div>
             {selectedDate && (
-              <div className="modal-date-label">{formatDisplayDate(selectedDate)}</div>
+              <div className="text-[0.8rem] text-gray-500 mt-0.5">{formatDisplayDate(selectedDate)}</div>
             )}
           </div>
-          <button className="modal-close-btn" onClick={onClose} aria-label="Close">&#x2715;</button>
+          <button
+            className="bg-transparent border-none text-2xl cursor-pointer text-gray-500 leading-none px-1.5 py-0.5 rounded transition-colors hover:bg-gray-100"
+            onClick={onClose}
+            aria-label="Close"
+          >
+            &#x2715;
+          </button>
         </div>
 
-        <form onSubmit={handleSubmit} noValidate>
-          <div className="form-group" style={{ marginBottom: '14px' }}>
-            <label className="form-label" htmlFor="event-title">Title *</label>
+        <form onSubmit={handleSubmit} noValidate className="flex flex-col gap-3.5">
+          <div className="flex flex-col gap-1.5">
+            <label className="text-[0.72rem] font-semibold text-gray-500 uppercase tracking-[0.06em]" htmlFor="event-title">Title *</label>
             <input
               id="event-title"
-              className={`form-input${error ? ' has-error' : ''}`}
+              className={`border rounded px-3 py-2 text-[0.95rem] w-full text-gray-900 outline-none transition-colors focus:border-[#1a73e8] ${error ? 'border-red-600' : 'border-gray-200'}`}
               type="text"
               value={form.title}
               onChange={e => handleChange('title', e.target.value)}
               placeholder="Add a title"
               autoFocus
             />
-            {error && <span className="form-error">{error}</span>}
+            {error && <span className="text-[0.78rem] text-red-600">{error}</span>}
           </div>
 
-          <div className="form-row" style={{ marginBottom: '14px' }}>
-            <div className="form-group">
-              <label className="form-label" htmlFor="event-date">Date</label>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div className="flex flex-col gap-1.5">
+              <label className="text-[0.72rem] font-semibold text-gray-500 uppercase tracking-[0.06em]" htmlFor="event-date">Date</label>
               <input
                 id="event-date"
-                className="form-input"
+                className="border border-gray-200 rounded px-3 py-2 text-[0.95rem] w-full text-gray-900 outline-none"
                 type="date"
                 value={selectedDate || ''}
                 readOnly
               />
             </div>
-            <div className="form-group">
-              <label className="form-label" htmlFor="event-time">Time</label>
+            <div className="flex flex-col gap-1.5">
+              <label className="text-[0.72rem] font-semibold text-gray-500 uppercase tracking-[0.06em]" htmlFor="event-time">Time</label>
               <input
                 id="event-time"
-                className="form-input"
+                className="border border-gray-200 rounded px-3 py-2 text-[0.95rem] w-full text-gray-900 outline-none transition-colors focus:border-[#1a73e8]"
                 type="time"
                 value={form.time}
                 onChange={e => handleChange('time', e.target.value)}
@@ -101,27 +111,34 @@ export default function EventModal({ isOpen, selectedDate, event, onSave, onDele
             </div>
           </div>
 
-          <div className="form-group" style={{ marginBottom: '4px' }}>
-            <label className="form-label" htmlFor="event-description">Description</label>
+          <div className="flex flex-col gap-1.5">
+            <label className="text-[0.72rem] font-semibold text-gray-500 uppercase tracking-[0.06em]" htmlFor="event-description">Description</label>
             <textarea
               id="event-description"
-              className="form-textarea"
+              className="border border-gray-200 rounded px-3 py-2 text-[0.95rem] w-full text-gray-900 outline-none transition-colors focus:border-[#1a73e8] resize-y min-h-[72px]"
               value={form.description}
               onChange={e => handleChange('description', e.target.value)}
               placeholder="Optional notes"
             />
           </div>
 
-          <div className="modal-footer">
+          <div className="flex justify-between items-center pt-2 border-t border-gray-200">
             <div>
               {isEditing && (
-                <button type="button" className="btn-danger" onClick={() => onDelete(event.id)}>
+                <button
+                  type="button"
+                  className="bg-transparent text-red-600 border border-red-600 rounded px-4 py-[9px] text-sm font-semibold cursor-pointer transition-colors hover:bg-red-600 hover:text-white"
+                  onClick={() => onDelete(event.id)}
+                >
                   Delete
                 </button>
               )}
             </div>
-            <div className="modal-footer-right">
-              <button type="submit" className="btn-primary">
+            <div className="flex gap-2">
+              <button
+                type="submit"
+                className="bg-[#1a73e8] text-white border-none rounded px-[22px] py-[9px] text-sm font-semibold cursor-pointer transition-opacity hover:opacity-90"
+              >
                 {isEditing ? 'Save Changes' : 'Add Event'}
               </button>
             </div>
